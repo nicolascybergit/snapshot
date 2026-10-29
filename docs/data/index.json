@@ -1,0 +1,66 @@
+{
+ "generated": "2026-10-30",
+ "radius_lo": 0.6667,
+ "stocks": [
+  {
+   "symbol": "AAPL",
+   "name": "Apple",
+   "date": "2026-10-05",
+   "score": 0.0323
+  },
+  {
+   "symbol": "AMD",
+   "name": "AMD",
+   "date": "2026-10-05",
+   "score": null
+  },
+  {
+   "symbol": "AMZN",
+   "name": "Amazon",
+   "date": "2026-10-05",
+   "score": null
+  },
+  {
+   "symbol": "ASML",
+   "name": "ASML",
+   "date": "2026-10-05",
+   "score": null
+  },
+  {
+   "symbol": "LLY",
+   "name": "Eli Lilly",
+   "date": "2026-10-05",
+   "score": 0.0739
+  },
+  {
+   "symbol": "META",
+   "name": "Meta",
+   "date": "2026-10-05",
+   "score": null
+  },
+  {
+   "symbol": "MSFT",
+   "name": "Microsoft",
+   "date": "2026-10-05",
+   "score": null
+  },
+  {
+   "symbol": "MU",
+   "name": "Micron",
+   "date": "2026-10-05",
+   "score": null
+  },
+  {
+   "symbol": "NVDA",
+   "name": "Nvidia",
+   "date": "2026-10-05",
+   "score": 0.1688
+  },
+  {
+   "symbol": "TSM",
+   "name": "TSMC",
+   "date": "2026-10-05",
+   "score": 0.1565
+  }
+ ]
+}

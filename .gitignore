@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+data/cache/
+ReadMe.txt
+WHY_SNAPSHOTS.md
+._*

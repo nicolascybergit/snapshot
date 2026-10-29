@@ -1,0 +1,363 @@
+# Parameters of the snapshot engine.
+# Typed nodes: `fixed` values are structural, `variable` ones may be tuned inside `range`.
+
+# Where the engine reads prices and keeps its primitive cache.
+data: {csv_dir: data/prices, primitive_dir: data/cache}
+
+# Plateaus: sideways stretches inside a narrow price band (two size classes).
+plateau:
+  band_tol:
+    type: variable
+    value: 0.06
+    range: [0.02, 0.16]
+  min_days:
+    type: variable
+    value: 10
+    range: [5, 30]
+  large_factor:
+    type: variable
+    value: 4.0
+    range: [2.0, 8.0]
+  large_min_days:
+    type: variable
+    value: 10
+    range: [5, 60]
+  max_slope_pct_per_day:
+    type: variable
+    value: 0.0015
+    range: [0.0002, 0.01]
+  max_drift_pct:
+    type: variable
+    value: 0.02
+    range: [0.005, 0.1]
+  large_flat_factor:
+    type: variable
+    value: 2.5
+    range: [1.0, 5.0]
+
+# Volume: trailing ratio against a baseline window, and its direction.
+volume:
+  baseline_window:
+    type: variable
+    value: 20
+    range: [5, 60]
+  flat_band:
+    type: variable
+    value: 0.15
+    range: [0.05, 0.4]
+
+# Breakouts: fast, sustained level shifts, up or down (two size classes).
+breakout:
+  min_move_pct:
+    type: variable
+    value: 0.06
+    range: [0.02, 0.15]
+  min_speed_pct_per_day:
+    type: variable
+    value: 0.01
+    range: [0.003, 0.05]
+  max_days:
+    type: variable
+    value: 8
+    range: [3, 20]
+  min_move_r2:
+    type: variable
+    value: 0.75
+    range: [0.5, 0.95]
+  pre_slope_factor:
+    type: variable
+    value: 3.0
+    range: [1.5, 6.0]
+  min_level_shift:
+    type: variable
+    value: 0.04
+    range: [0.01, 0.12]
+  min_regime_gap_std:
+    type: variable
+    value: 1.5
+    range: [0.5, 3.0]
+  reversal_slope_factor:
+    type: variable
+    value: 1.0
+    range: [0.5, 3.0]
+  v_reversal_relax:
+    type: variable
+    value: 0.6
+    range: [0.2, 1.0]
+  context_days:
+    type: variable
+    value: 10
+    range: [5, 30]
+  large_factor:
+    type: variable
+    value: 3.0
+    range: [2.0, 6.0]
+  max_days_large:
+    type: variable
+    value: 15
+    range: [5, 40]
+
+# Short-tile trend classification (switched off, kept for completeness).
+trend:
+  primitive_enabled: {type: fixed, value: false}
+  tile_window:
+    type: variable
+    value: 10
+    range: [5, 40]
+  tile_step:
+    type: variable
+    value: 1
+    range: [1, 5]
+  slope_tol:
+    type: variable
+    value: 0.002
+    range: [0.0005, 0.01]
+  break_up_factor:
+    type: variable
+    value: 2.0
+    range: [1.2, 5.0]
+  break_down_factor:
+    type: variable
+    value: 2.0
+    range: [1.2, 5.0]
+  min_slope:
+    type: variable
+    value: 0.001
+    range: [0.0002, 0.01]
+  min_r2:
+    type: variable
+    value: 0.5
+    range: [0.2, 0.9]
+
+# Snapshots: one past-only picture per day, similarity tolerances, grouping and robustness gates.
+snapshot:
+  max_horizon_days:
+    type: variable
+    value: 30
+    range: [5, 90]
+  trail_window:
+    type: variable
+    value: 20
+    range: [5, 60]
+  sim_tol_ath_gap:
+    type: variable
+    value: 0.02
+    range: [0.005, 0.08]
+  sim_tol_vol_ratio:
+    type: variable
+    value: 0.2
+    range: [0.05, 0.6]
+  sim_tol_days_ath:
+    type: variable
+    value: 10
+    range: [2, 40]
+  min_group_size:
+    type: variable
+    value: 2
+    range: [2, 10]
+  profile_offsets:
+    type: variable
+    value: [1, 2, 3, 5, 8, 13, 21, 34, 45, 60]
+    range: [1, 90]
+  min_profile_overlap:
+    type: variable
+    value: 4
+    range: [2, 10]
+  profile_w_path:
+    type: variable
+    value: 1.0
+    range: [0.0, 3.0]
+  profile_w_envelope:
+    type: variable
+    value: 0.5
+    range: [0.0, 3.0]
+  profile_w_timing:
+    type: variable
+    value: 0.25
+    range: [0.0, 2.0]
+  collapse_window_days:
+    type: variable
+    value: 4
+    range: [1, 15]
+  narrow_factor:
+    type: variable
+    value: 0.5
+    range: [0.2, 0.9]
+  min_uniformity:
+    type: variable
+    value: 0.7
+    range: [0.5, 0.95]
+  min_improvement:
+    type: variable
+    value: 0.0
+    range: [-0.1, 0.3]
+  min_independent_occurrences:
+    type: variable
+    value: 4
+    range: [2, 20]
+  min_independent_gap_days:
+    type: variable
+    value: 42
+    range: [5, 400]
+  min_time_spread_days:
+    type: variable
+    value: 126
+    range: [20, 1500]
+  bundle_population: {type: fixed, value: independent}
+  bundle_tol_pct:
+    type: variable
+    value: 1.5
+    range: [0.25, 10.0]
+  min_members_at_offset:
+    type: variable
+    value: 2
+    range: [2, 3]
+
+# Trend regimes: bull / bear / sideways stretches over the whole history (descriptive only).
+trend_regime:
+  slope_window:
+    type: variable
+    value: 20
+    range: [5, 120]
+  slope_min_r2:
+    type: variable
+    value: 0.5
+    range: [0.2, 0.9]
+  flat_slope_pct:
+    type: variable
+    value: 0.0015
+    range: [0.0002, 0.01]
+  bear_drawdown_pct:
+    type: variable
+    value: 0.2
+    range: [0.05, 0.5]
+  near_peak_pct:
+    type: variable
+    value: 0.05
+    range: [0.01, 0.15]
+  structure_events:
+    type: variable
+    value: 6
+    range: [2, 20]
+  ath_window_days:
+    type: variable
+    value: 60
+    range: [10, 250]
+  ath_stale_days:
+    type: variable
+    value: 120
+    range: [20, 500]
+  confirm_days:
+    type: variable
+    value: 20
+    range: [5, 120]
+  min_segment_days:
+    type: variable
+    value: 10
+    range: [3, 60]
+  max_pause_days:
+    type: variable
+    value: 30
+    range: [5, 120]
+  push_window_days:
+    type: variable
+    value: 10
+    range: [1, 60]
+
+# All-time-high meta: what happened around each new high.
+ath_meta:
+  near_days:
+    type: variable
+    value: 3
+    range: [0, 10]
+  follow_days:
+    type: variable
+    value: 20
+    range: [5, 60]
+  vol_high:
+    type: variable
+    value: 1.3
+    range: [1.1, 2.5]
+  vol_low:
+    type: variable
+    value: 0.8
+    range: [0.4, 1.0]
+  approach_pct:
+    type: variable
+    value: 0.02
+    range: [0.005, 0.06]
+
+# Scoring: turns the outcomes of a group into one comparable trade score.
+scoring:
+  alpha_riskant:
+    type: variable
+    value: 10
+    range: [5.0, 20.0]
+  alpha_sicher:
+    type: variable
+    value: 1.5
+    range: [0.5, 3.0]
+  p_cutoff:
+    type: variable
+    value: 0.8
+    range: [0.7, 0.95]
+  cap_value:
+    type: variable
+    value: 1.568
+    range: [1.0, 3.0]
+  downside_threshold:
+    type: variable
+    value: 0.25
+    range: [0.15, 0.4]
+  k_confidence:
+    type: variable
+    value: 10
+    range: [1.0, 20.0]
+  confidence_shrink_enabled: {type: fixed, value: true}
+  time_scale:
+    type: variable
+    value: 17.4
+    range: [1.0, 500.0]
+  recency_lambda:
+    type: variable
+    value: 0.01
+    range: [0.0, 0.1]
+  recency_floor:
+    type: variable
+    value: 0.5
+    range: [0.2, 1.0]
+
+# Street: how scored decisions are emitted, gripped and filtered by the radius.
+street:
+  default_radius_lo:
+    type: variable
+    value: 0.6667
+    range: [0.0, 1.0]
+  dummy_initial:
+    type: variable
+    value: 0.5
+    range: [0.0, 1.0]
+  grip_tolerance:
+    type: variable
+    value: 0.0
+    range: [0.0, 0.5]
+  emit_policy: {type: fixed, value: all_offsets}
+
+# Statements: how consistent a pattern must be before it is written as a sentence.
+core:
+  min_agreement:
+    type: variable
+    value: 0.75
+    range: [0.6, 0.95]
+  min_drawdowns:
+    type: variable
+    value: 3
+    range: [2, 10]
+  max_recovery_months:
+    type: variable
+    value: 36
+    range: [3, 120]
+  min_snapshot_cases:
+    type: variable
+    value: 8
+    range: [4, 40]
